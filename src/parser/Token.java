@@ -1,3 +1,5 @@
+package parser;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,5 +51,5 @@ public class Token {
             "extended"
     };
 
-    public static Set<String> types = new HashSet<>(Arrays.asList(typeList));
+    static Set<String> types = new HashSet<>(Arrays.asList(typeList));
 }

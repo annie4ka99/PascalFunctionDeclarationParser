@@ -1,3 +1,7 @@
+package parser;
+
+import exception.UnexpectedTokenException;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -148,13 +152,10 @@ public class Parser {
             Parser parser = new Parser();
             Tree result = parser.parse("function square(var a, b : integer):integer;");
             result.show();
-            System.out.println("that's all");
         } catch (ParseException ex) {
-            System.out.println(ex.getMessage() + ex.getErrorOffset());
+            System.out.println(ex.getMessage() +" before position " +  ex.getErrorOffset());
         }
     }
-
-
 }
 
 

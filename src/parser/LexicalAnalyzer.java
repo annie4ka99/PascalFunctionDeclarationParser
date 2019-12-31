@@ -1,3 +1,7 @@
+package parser;
+
+import parser.Token;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -6,7 +10,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 
-public class LexicalAnalyzer {
+class LexicalAnalyzer {
     private final InputStream is;
     private int curChar;
     int curPos;
@@ -14,7 +18,7 @@ public class LexicalAnalyzer {
 
     private Set<String> identifiers = new HashSet<>();
 
-    public LexicalAnalyzer(InputStream is) throws ParseException {
+    LexicalAnalyzer(InputStream is) throws ParseException {
         this.is = is;
         curPos = 0;
         nextChar();
@@ -83,9 +87,7 @@ public class LexicalAnalyzer {
                         break;
                     default:
                         if (Token.types.contains(token)
-                                ||Pattern.matches("^(([1-9][0-9]*)|[0])[.][.](([1-9][0-9]*)|[0])$",  token
-                        )
-                        ) {
+                                ||Pattern.matches("^(([1-9][0-9]*)|[0])[.][.](([1-9][0-9]*)|[0])$",  token)) {
                             curToken = new Token(token, Token.TokenType.TYPE);
                             break;
                         } else if (Pattern.matches("^[a-zA-Z_]\\w*$", token)) {

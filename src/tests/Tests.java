@@ -1,52 +1,48 @@
+package tests;
+
 import org.junit.Test;
+import parser.Parser;
 
 import java.text.ParseException;
 
 import static org.junit.Assert.fail;
 
 public class Tests {
-    private final String testSep = "-------------------------------------------------------------------------------------";
 
     private final Parser parser = new Parser();
 
-
     private void testCorrect(String expression) {
+        test(expression, true);
+    }
+
+    private void testIncorrect(String expression) {
+        test(expression, false);
+    }
+
+    private void test(String expression, boolean isCorrect) {
         try {
             System.out.println(expression);
             parser.parse(expression).show();
+            if (!isCorrect) fail("incorrect expression parsing completed without errors");
         } catch (ParseException e) {
             for (int i = 0; i < e.getErrorOffset() - 1; ++i) {
                 System.out.print(" ");
             }
             System.out.println("^");
             System.out.println(e.getMessage() + " before position " + e.getErrorOffset());
-            fail("correct expression parsed with errors");
+            if (isCorrect) fail("correct expression parsed completed with errors");
         }
-        System.out.println(testSep);
-    }
-
-    private void testIncorrect(String expression) {
-        try {
-            System.out.println(expression);
-            parser.parse(expression).show();
-            fail("incorrect expression parsing completed without errors");
-        } catch (ParseException e) {
-            for (int i = 0; i < e.getErrorOffset() - 1; ++i) {
-                System.out.print(" ");
-            }
-            System.out.println("^");
-            System.out.println(e.getMessage() + " before position " +  e.getErrorOffset());
-        }
+        String testSep = "-------------------------------------------------------------------------------------";
         System.out.println(testSep);
     }
 
     @Test
-    public void functionWithoutType() {
+    public void functionWithoutTypeTest() {
         testIncorrect("function f( var a, b : char; c : integer);");
     }
 
     @Test
-    public void procedureWithType() {
+    public void procedureWithTypeTest() {
         testIncorrect("procedure f( var a, b : char; c : integer): single;");
     }
 
@@ -67,12 +63,12 @@ public class Tests {
     }
 
     @Test
-    public void wrongFunctionName() {
+    public void wrongFunctionNameTest() {
         testIncorrect("function 1_f( var a : integer, b : char, c : integer);");
     }
 
     @Test
-    public void wrongVariableName() {
+    public void wrongVariableNameTest() {
         testIncorrect("function f( var a : integer, b- : char, c : integer);");
     }
 
@@ -83,7 +79,7 @@ public class Tests {
 
 
     @Test
-    public void noSemicolonInTheEnd() {
+    public void noSemicolonInTheEndTest() {
         testIncorrect("procedure p(var a, b:char; c:boolean)");
     }
 
@@ -128,12 +124,22 @@ public class Tests {
 
     @Test
     public void rangeTypeTest() {
-        testCorrect("function f (var a, b : 1.21; c : 14..23) : 0..5;");
+        testCorrect("function f (var a, b : 1..21; c : 14..23) : 0..5;");
     }
 
     @Test
-    public void rangeTypeIncorrectTest() {
+    public void rangeTypeIncorrectTest1() {
         testIncorrect("function f (var a, b : 1aa21; c : 14..23):0..5;");
+    }
+
+    @Test
+    public void rangeTypeIncorrectTest2() {
+        testIncorrect("function f (var a, b : 1.21; c : 14..23):0..5;");
+    }
+
+    @Test
+    public void rangeTypeIncorrectTest3() {
+        testIncorrect("function f (var a, b : 1aa21; c : 14..23):00..5;");
     }
 
 }

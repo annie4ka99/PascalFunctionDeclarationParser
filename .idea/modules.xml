@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PascalFunctionNameParser.iml" filepath="$PROJECT_DIR$/PascalFunctionNameParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PascalFunctionDeclarationParser.iml" filepath="$PROJECT_DIR$/PascalFunctionDeclarationParser.iml" />
     </modules>
   </component>
 </project>
